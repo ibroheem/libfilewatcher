@@ -51,13 +51,7 @@ public:
 
 class filewatcher_t {
 public:
-	enum {
-		// The buffer size might be artifically restricted to a size smaller than 64 kB!
-		DEFAULT_BUFFER_SIZE = 8 * 1024UL,
-		MAX_BUFFER_SIZE = 64 * 1024UL
-	};
-
-	filewatcher_t(size_t buffer_size = DEFAULT_BUFFER_SIZE);
+	filewatcher_t();
 
 	~filewatcher_t();
 

@@ -149,9 +149,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="include\filewatcher.h" />
+    <ClInclude Include="include\filewatcher.win32.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\filewatcher.cpp" />
+    <ClCompile Include="source\filewatcher.win32.cpp" />
     <ClCompile Include="source\main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

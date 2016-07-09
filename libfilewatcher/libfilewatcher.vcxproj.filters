@@ -18,12 +18,18 @@
     <ClInclude Include="include\filewatcher.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\filewatcher.win32.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\filewatcher.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\filewatcher.win32.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
