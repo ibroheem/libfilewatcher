@@ -14,64 +14,73 @@
 
 #include <experimental/filesystem>
 
-namespace filewatcher {
+namespace fs = std::experimental::filesystem::v1;
 
-enum file_action {
-	FILE_ADD,
-	FILE_DELETE,
-	FILE_MODIFIED,
-	FILE_RENAMED_OLD_NAME,
-	FILE_RENAMED_RENAMED_NEW_NAME
-};
+namespace filewatcher
+{
 
-enum notify_filter {
-	FILE_NAME = 1,
-	DIRECTORY_NAME = 2,
-	FILE_ATTRIBUTES = 4,
-	FILE_SIZE = 8,
-	FILE_LAST_ACSESS = 16,
-	FILE_LAST_WRITE = 32,
-	FILE_CREATION = 64,
-	FILE_SECURITY = 128,
-	FILE_ALL = 0xFF
-};
+   enum file_action
+   {
+      FILE_ADD,
+      FILE_DELETE,
+      FILE_MODIFIED,
+      FILE_RENAMED_OLD_NAME,
+      FILE_RENAMED_RENAMED_NEW_NAME
+   };
 
-inline notify_filter operator|(notify_filter a, notify_filter b) {
-	return static_cast<notify_filter>(static_cast<uint32_t>(a) | static_cast<uint32_t>(b));
-}
+   enum notify_filter
+   {
+      FILE_NAME = 1,
+      DIRECTORY_NAME = 2,
+      FILE_ATTRIBUTES = 4,
+      FILE_SIZE = 8,
+      FILE_LAST_ACSESS = 16,
+      FILE_LAST_WRITE = 32,
+      FILE_CREATION = 64,
+      FILE_SECURITY = 128,
+      FILE_ALL = 0xFF
+   };
 
-class not_found_path_exception : public std::exception {
-public:
-	not_found_path_exception()
-		: std::exception("not found path") {
-	}
+   inline notify_filter operator|(notify_filter a, notify_filter b)
+   {
+      return static_cast<notify_filter>(static_cast<uint32_t>(a) | static_cast<uint32_t>(b));
+   }
 
-	virtual ~not_found_path_exception() = default;
-};
+   class not_found_path_exception : public std::exception
+   {
+      public:
+         not_found_path_exception()
+            //: std::exception//("not found path")
+         {
+         }
 
-class filewatcher_t {
-public:
-	filewatcher_t();
+         virtual ~not_found_path_exception() = default;
+   };
 
-	~filewatcher_t();
+   class filewatcher_t
+   {
+      public:
+         filewatcher_t();
 
-	filewatcher_t(filewatcher_t const &) = delete;
-	filewatcher_t& operator=(filewatcher_t const &) = delete;
+         ~filewatcher_t();
 
-	void add_watch(std::tr2::sys::path const &path,
-		notify_filter filter,
-		bool recursive,
-		std::function<void(std::tr2::sys::path const &, file_action)> &&handler);
+         filewatcher_t(filewatcher_t const &) = delete;
+         filewatcher_t& operator=(filewatcher_t const &) = delete;
 
-	void remove_watch(std::tr2::sys::path const &directory);
+         void add_watch(fs::path const &path,
+                        notify_filter filter,
+                        bool recursive,
+                        std::function<void(fs::path const &, file_action)> &&handler);
 
-	void update();
+         void remove_watch(fs::path const &directory);
 
-	void wait_and_update(std::chrono::milliseconds timeout);
+         void update();
 
-private:
-	class filewatcher_impl_t;
-	std::unique_ptr<filewatcher_impl_t> impl_;
-};
+         void wait_and_update(std::chrono::milliseconds timeout);
+
+      private:
+         class filewatcher_impl_t;
+         std::unique_ptr<filewatcher_impl_t> impl_;
+   };
 
 }

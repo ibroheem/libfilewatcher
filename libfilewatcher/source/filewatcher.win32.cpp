@@ -4,7 +4,7 @@
 //---------------------------------------------------------------------------------------------------------------------
 
 #define WIN32_LEAN_AND_MEAN
-#include <Windows.h>
+#include <windows.h>
 
 #include <cassert>
 #include <memory>
@@ -33,7 +33,7 @@ struct watcher_file_entry : public OVERLAPPED, public std::enable_shared_from_th
 	uint32_t filter_flags;
 	HANDLE directory_handle;
 	std::vector<uint8_t> buffer;
-    std::tr2::sys::path path;
+   fs::path path;
 	std::function<void(std::wstring const &, file_action)> file_changes_handler;
 };
 
@@ -195,11 +195,11 @@ filewatcher_t::filewatcher_impl_t::filewatcher_impl_t(size_t buffer_size) {
     buffer_size_ = buffer_size;
 }
 
-void filewatcher_t::filewatcher_impl_t::add_watch(std::tr2::sys::path const &path,
+void filewatcher_t::filewatcher_impl_t::add_watch(fs::path const &path,
     notify_filter filter,
     bool recursive,
-    std::function<void(std::tr2::sys::path const&, file_action)> &&handler) {
-    if (!std::tr2::sys::exists(path)) {
+    std::function<void(fs::path const&, file_action)> &&handler) {
+    if (!fs::exists(path)) {
         throw not_found_path_exception();
     }
     auto entry = std::make_shared<details::watcher_file_entry>(path,

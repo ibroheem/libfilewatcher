@@ -26,10 +26,10 @@ class filewatcher_t::filewatcher_impl_t {
 public:
     explicit filewatcher_impl_t(size_t buffer_size);
 
-    void add_watch(std::tr2::sys::path const & path,
+    void add_watch(fs::path const & path,
         notify_filter filter,
         bool recursive,
-        std::function<void(std::tr2::sys::path const &path, file_action)>&& handler);
+        std::function<void(fs::path const &path, file_action)>&& handler);
 
     void remove_watch(std::wstring const &directory);
 
