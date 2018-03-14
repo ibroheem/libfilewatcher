@@ -2,7 +2,7 @@
 
 ## Lightweight C++ Class For File Watcher
 
-Only support visual studio 2015
+Modified For MinGW GCC, tested with v7.2
 
 ## Why?
 - Modern C++ Style
